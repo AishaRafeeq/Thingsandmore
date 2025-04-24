@@ -1,0 +1,195 @@
+﻿@model IEnumerable<Product>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Poppins, Nunito, Montserrat Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- FontAwesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="/css/site.css">
+
+    <style>
+        /* Header Styling */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: #102E50;
+            color: white;
+        }
+
+        .header-left img {
+            height: 40px;
+        }
+
+        .header-right a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+            .header-right a:hover {
+                color: #F5C45E;
+            }
+
+        .cart-count {
+            background-color: #F5C45E;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 8px;
+            margin-left: 5px;
+        }
+
+        /* Page Title */
+        h2 {
+            text-align: center;
+            font-size: 30px;
+            font-weight: 600;
+            margin-top: 30px;
+            color: #102E50;
+        }
+
+        /* Product Grid Container */
+        .product-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .product-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+            }
+
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 2px solid #eee;
+        }
+
+        .sale-tag {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: #F5C45E;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .product-details {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .btn-primary {
+            background-color: #F5C45E;
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+            .btn-primary:hover {
+                background-color: #E78B48;
+            }
+
+        /* Responsive Adjustments */
+        
+
+        .header-left {
+            margin-bottom: 10px;
+        }
+
+        .product-grid-container {
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        }
+
+        .logo {
+            height: 80px;
+            margin-left: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-left">
+            <img src="~/logo/logo.png" alt="Logo"  />
+        </div>
+        <div class="header-right">
+            <a href="javascript:history.back()" class="go-back-link">
+                <i class="fa fa-arrow-left"></i> Go Back
+            </a>
+            <a asp-action="Index" asp-controller="ShoppingCart" class="cart-icon">
+                <i class="fa fa-shopping-cart"></i>
+                <span class="cart-count">@ViewBag.CartItemCount</span>
+            </a>
+            <a href="/Account/Logout" class="logout-link">
+                <i class="fa fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </header>
+
+    <h2>@ViewBag.CategoryName Products</h2>
+
+    <div class="product-grid-container">
+        @foreach (var product in Model)
+        {
+            
+                <div class="product-card">
+                    <img src="@product.ImageURL" alt="@product.Name" class="product-img" />
+                    <h4>@product.Name</h4>
+                    <p>Category: @product.Category</p>
+                    <p>Price: ₹@product.Price</p>
+                    <form asp-action="AddToCart" asp-controller="ShoppingCart" method="post">
+                        <input type="hidden" name="productId" value="@product.ProductID" />
+                        <button type="submit" class="btn btn-success">Add to Cart</button>
+                    </form>
+                    <a href="@Url.Action("Details", "Product", new { id = product.ProductID })" class="btn btn-link view-details">View Details</a>
+                
+
+                </div>
+            
+        }
+    </div>
+
+
+    <script src="/js/site.js"></script>
+</body>
+</html>
+

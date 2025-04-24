@@ -1,0 +1,145 @@
+﻿@model Cartopia.ViewModels.CustomerDashboardViewModel
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<header class="header">
+    <div class="header-left">
+        <div id="hamburger-menu" class="hamburger-icon">
+            <i class="fa fa-bars"></i>
+        </div>
+        <img src="/logo/logo.png" alt="Company Logo" class="logo">
+    </div>
+
+    <form asp-action="SearchProduct" method="get" class="search-bar">
+        <input type="text" name="searchTerm" placeholder="Search for products..." class="search-input" />
+        <button type="submit" class="search-button">
+            <i class="fa fa-search"></i>
+        </button>
+    </form>
+
+    <div class="header-icons">
+        <a asp-action="ViewProfile" asp-controller="Account" class="profile-link">
+            <i class="fa fa-user"></i> Profile
+        </a>
+        <form asp-action="Logout" asp-controller="Account" method="post" class="logout-form">
+            <button type="submit" class="btn btn-link logout-link">
+                <i class="fa fa-sign-out-alt"></i> Logout
+            </button>
+        </form>
+        <a asp-action="Index" asp-controller="ShoppingCart" class="cart-icon">
+            <i class="fa fa-shopping-cart"></i>
+            <span class="cart-count">@ViewBag.CartItemCount</span>
+        </a>
+    </div>
+
+    <nav id="mobile-nav" class="mobile-nav">
+        <ul>
+            <li><a asp-action="ViewProfile" asp-controller="Account"><i class="fa fa-user"></i> View Profile</a></li>
+            <li>
+                <a asp-action="OrderSummary" asp-controller="Checkout" asp-route-orderId="@Model.RecentOrders.FirstOrDefault()?.OrderID" style="color: #F5C45E; text-decoration: none; display: block; padding: 10px;">
+                    <i class="fa fa-history"></i> Order History
+                </a>
+            </li>
+
+
+
+            <li><a asp-action="Help" asp-controller="Home"><i class="fa fa-question-circle"></i> Help</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="dashboard-layout">
+    <main>
+        @* Carousel *@
+        @if (ViewBag.CarouselImages != null && ViewBag.CarouselImages.Count > 0)
+        {
+            <div id="customCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @for (int i = 0; i < ViewBag.CarouselImages.Count; i++)
+                    {
+                        <div class="carousel-item @(i == 0 ? "active" : "")">
+                            <img src="/carrousal/@ViewBag.CarouselImages[i]" class="d-block w-100" alt="Image @i+1">
+                        </div>
+                    }
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#customCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#customCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        }
+        else
+        {
+            <p>No carousel images available.</p>
+        }
+        <div>
+        <h3>Shop by Categories</h3>
+        </div>
+        <div class="categories-container">
+            <a asp-action="Category" asp-controller="Product" asp-route-category="Fashion" class="category-btn">
+                <i class="fa fa-shopping-bag"></i>
+                <span>Fashion</span>
+            </a>
+            <a asp-action="Category" asp-controller="Product" asp-route-category="Home" class="category-btn">
+                <i class="fa fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a asp-action="Category" asp-controller="Product" asp-route-category="Electronics" class="category-btn">
+                <i class="fa fa-tv"></i>
+                <span>Electronics</span>
+            </a>
+            <a asp-action="Category" asp-controller="Product" asp-route-category="Beauty" class="category-btn">
+                <i class="fa fa-magic"></i>
+                <span>Beauty</span>
+            </a>
+        </div>
+
+        <h3>Featured Products</h3>
+        <div class="featured-products-container">
+            @if (ViewBag.FeaturedProducts is List<Product> products && products.Count > 0)
+            {
+                foreach (var product in products)
+                {
+                    <div class="product-card">
+                        <img src="@product.ImageURL" alt="@product.Name" class="product-img" />
+                        <h4>@product.Name</h4>
+                        <p>Category: @product.Category</p>
+                        <p>Price: ₹@product.Price</p>
+                        <form asp-action="AddToCart" asp-controller="ShoppingCart" method="post">
+                            <input type="hidden" name="productId" value="@product.ProductID" />
+                            <button type="submit" class="btn btn-success">Add to Cart</button>
+                        </form>
+
+                        <a href="@Url.Action("Details", "Product", new { id = product.ProductID })" class="btn btn-link view-details">View Details</a>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No featured products available.</p>
+            }
+        </div>
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const hamburger = document.getElementById('hamburger-menu');
+        const mobileNav = document.getElementById('mobile-nav');
+
+        hamburger.addEventListener('click', function () {
+            mobileNav.classList.toggle('show');
+        });
+    });
+</script>
+<script src="/js/site.js"></script>
+

@@ -1,0 +1,7 @@
+﻿@model Product
+
+<form asp-action="AddToCart" asp-controller="ShoppingCart" method="post" class="add-to-cart-form">
+    <input type="hidden" name="productId" value="@Model.ProductID" />
+    <button type="submit" class="btn btn-success">Add to Cart</button>
+</form>
+

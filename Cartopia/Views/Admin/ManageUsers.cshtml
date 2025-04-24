@@ -1,0 +1,179 @@
+﻿@using System.Linq
+@model IEnumerable<ManageUserViewModel>
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users</title>
+    <!-- Font Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            width: 90%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header img {
+            height: 50px;
+        }
+
+        .header a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .header a:hover {
+            text-decoration: underline;
+        }
+
+        /* Title */
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* User Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+            font-weight: 600;
+        }
+
+        td {
+            color: #555;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .actions button {
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .actions button:hover {
+            background-color: #0056b3;
+        }
+
+        .actions input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+       
+            .actions {
+                flex-direction: column;
+            }
+
+            table {
+                font-size: 14px;
+            }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <div class="header">
+            <img src="@Url.Content("~/logo/logo.png")" alt="Logo">
+
+            <a asp-action="Dashboard" asp-controller="Admin">Back to Dashboard</a>
+        </div>
+
+       
+        <h2>Manage Users</h2>
+
+       
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Roles</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.FullName</td>
+                        <td>@user.Email</td>
+                        <td>
+                            @foreach (var role in user.Roles)
+                            {
+                                <span>@role</span><br />
+                            }
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <form asp-action="AssignRole" method="post" style="display:inline;">
+                                    <input type="hidden" name="UserId" value="@user.Id" />
+                                    <input type="text" name="RoleName" placeholder="Role Name" />
+                                    <button type="submit">Assign Role</button>
+                                </form>
+                                
+                                <form asp-action="DeleteUser" method="post" style="display:inline;">
+                                    <input type="hidden" name="UserId" value="@user.Id" />
+                                    <button type="submit" style="background-color: #dc3545;">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+               
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,175 @@
+﻿@model IEnumerable<Product>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+   
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    
+    <link rel="stylesheet" href="/css/site.css">
+
+    <style>
+        .header {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: #102E50;
+            color: white;
+        }
+
+        .header-left img {
+            height: 40px;
+        }
+
+        .header-right a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+            .header-right a:hover {
+                color: #F5C45E;
+            }
+
+        .cart-count {
+            background-color: #F5C45E;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 8px;
+            margin-left: 5px;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 30px;
+            font-weight: 600;
+            margin-top: 30px;
+            color: #102E50;
+        }
+
+        .product-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding-bottom: 15px;
+        }
+
+            .product-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+            }
+
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 2px solid #eee;
+        }
+
+        .product-details {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .btn-primary, .btn-success {
+            background-color: #F5C45E;
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 5px;
+        }
+
+            .btn-primary:hover, .btn-success:hover {
+                background-color: #E78B48;
+            }
+
+        .btn-link.view-details {
+            margin-top: 10px;
+            display: inline-block;
+            color: #102E50;
+            font-weight: 500;
+        }
+
+            .btn-link.view-details:hover {
+                text-decoration: underline;
+                color: #F5C45E;
+            }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-left">
+            <a href="/"><img src="/logo/logo.png" alt="Brand Logo" class="logo"></a>
+        </div>
+        <div class="header-right">
+            <a href="javascript:history.back()" class="go-back-link">
+                <i class="fa fa-arrow-left"></i> Go Back
+            </a>
+            <a asp-action="Index" asp-controller="ShoppingCart" class="cart-icon">
+                <i class="fa fa-shopping-cart"></i>
+                <span class="cart-count">@ViewBag.CartItemCount</span>
+            </a>
+            <a href="/Account/Logout" class="logout-link">
+                <i class="fa fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </header>
+
+    <h2>Search Results</h2>
+
+    <div class="product-grid-container">
+        @foreach (var product in Model)
+        {
+            <div class="product-card">
+                <img src="@product.ImageURL" alt="@product.Name" class="product-img" />
+                <div class="product-details">
+                    <div class="product-name">@product.Name</div>
+                    <p class="text-muted">Category: @product.Category</p>
+                    <p><strong>Price:</strong> ₹@product.Price</p>
+                    <form asp-action="AddToCart" asp-controller="ShoppingCart" method="post">
+                        <input type="hidden" name="productId" value="@product.ProductID" />
+                        <button type="submit" class="btn btn-success">Add to Cart</button>
+                    </form>
+                    <a href="@Url.Action("Details", "Product", new { id = product.ProductID })" class="btn btn-link view-details">View Details</a>
+                </div>
+            </div>
+        }
+    </div>
+
+    <script src="/js/site.js"></script>
+</body>
+</html>
+

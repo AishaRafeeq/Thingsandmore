@@ -1,0 +1,250 @@
+﻿@model Cartopia.Models.Order
+@{
+    ViewBag.Title = "Order Summary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .admin-header {
+            background-color: #102E50;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+            .admin-header img {
+                height: 60px;
+            }
+
+            .admin-header .header-actions a {
+                color: #F5C45E;
+                margin-left: 20px;
+                font-weight: 600;
+                text-decoration: none;
+            }
+
+                .admin-header .header-actions a:hover {
+                    color: #E78B48;
+                }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #102E50;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .order-summary-table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+            .order-summary-table th,
+            .order-summary-table td {
+                padding: 15px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .order-summary-table th {
+                background-color: #102E50;
+                color: white;
+            }
+
+            .order-summary-table td {
+                color: #555;
+            }
+
+        .total-row {
+            font-weight: 600;
+            background-color: #f5f5f5;
+        }
+
+        .order-summary-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: space-between;
+        }
+
+        .btn-back {
+            background-color: #102E50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+        }
+
+            .btn-back:hover {
+                background-color: #0b203b;
+            }
+
+        .btn-place-order {
+            background-color: #F5C45E;
+            color: #102E50;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+        }
+
+            .btn-place-order:hover {
+                background-color: #e6b64d;
+            }
+
+        .order-summary-actions a {
+            color: #F5C45E;
+            font-weight: 600;
+        }
+
+            .order-summary-actions a:hover {
+                color: #E78B48;
+            }
+
+        .no-order-message {
+            text-align: center;
+            padding: 20px;
+            font-size: 18px;
+            color: #555;
+        }
+
+        .alert {
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        
+        .btn-shop {
+            background-color: #F5C45E;
+            color: #102E50;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+            .btn-shop:hover {
+                background-color: #e6b64d;
+            }
+
+        
+        .btn-order-history {
+            background-color: #102E50;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+            .btn-order-history:hover {
+                background-color: #0b203b;
+            }
+    </style>
+}
+
+<div class="admin-header">
+    <img src="~/logo/logo.png" alt="Logo" height="auto" width="150px" />
+    <div class="header-actions">
+        <a asp-action="Dashboard" asp-controller="Account" class="btn-back">Go Back</a>
+    </div>
+</div>
+
+<div class="container">
+    <h2>Order Summary</h2>
+
+   
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Success"]
+        </div>
+    }
+
+    
+    @if (!string.IsNullOrEmpty(ViewBag.Message))
+    {
+        <div class="no-order-message">
+            <p>@ViewBag.Message</p>
+           
+            <a href="@Url.Action("Dashboard", "Account")" class="btn-shop">Start Shopping</a>
+        </div>
+    }
+    else
+    {
+      
+        <div class="order-summary">
+            <table class="order-summary-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var detail in Model.OrderDetails!)
+                    {
+                        <tr>
+                            <td>@detail.Product!.Name</td>
+                            <td>@detail.Quantity</td>
+                            <td>₹@detail.Price</td>
+                            <td>₹@detail.Quantity * @detail.Price</td>
+                        </tr>
+                    }
+                    <tr class="total-row">
+                        <td colspan="3" style="text-align:right;">Total Amount</td>
+                        <td>₹@Model.TotalAmount</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            
+
+          
+            <div class="order-summary-actions">
+                <a href="@Url.Action("OrderSummary", "Checkout")" class="btn-order-history">Go to Order History</a>
+            </div>
+        </div>
+    }
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+

@@ -1,0 +1,79 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@model IEnumerable<Product>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* Custom Styling */
+    :root {
+        --dark-blue: #102E50;
+        --gold: #F5C45E;
+        --orange: #E78B48;
+        --red: #BE3D2A;
+    }
+
+    body {
+        font-family: 'Sreda', sans-serif;
+        background-color: var(--dark-blue);
+        color: white;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h2, p {
+        text-align: center;
+    }
+
+    a {
+        color: var(--gold);
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: var(--red);
+    }
+
+    .welcome {
+        background-color: var(--orange);
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    .products {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .product-item {
+        background-color: var(--gold);
+        border: 2px solid var(--orange);
+        padding: 15px;
+        border-radius: 10px;
+        width: 200px;
+        text-align: center;
+        font-weight: bold;
+        color: var(--dark-blue);
+    }
+
+    .product-item:hover {
+        background-color: var(--red);
+        color: white;
+    }
+
+</style>
+
+@if (!User.Identity!.IsAuthenticated)
+{
+    <p>
+        <a asp-controller="Account" asp-action="Register">Register</a> or
+        <a asp-controller="Account" asp-action="Login">Login</a> to start shopping!
+    </p>
+}
+
+
