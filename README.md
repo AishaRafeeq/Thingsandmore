@@ -58,34 +58,48 @@ This is a fully functional e-commerce web application developed using ASP.NET Co
 Here’s a visual walkthrough of the application features from both Admin and Customer perspectives:
 
 ### 🔐 Admin Dashboard  
-![Admin Dashboard](images/AdminDashboard screenshot.png)
+![Admin Dashboard](images/admindashboard.png)
 
 ### 👥 Manage Users  
-![Manage Users](images/Manage User screenshot.png)
+![Manage Users](images/manageuser.png)
 
 ### ➕ Add Product  
-![Add Product](images/Upload product.png)
+![Add Product](images/Upload_product.png)
 
 ### 📦 Manage Orders  
-![Manage Orders](images/manage-orders.png)
+![Manage Orders](images/manageorders.png)
 
 ### 🏠 Customer Home  
-![Customer Home](images/customer-home.png)
+![Customer Home](images/customerhome.png)
 
 ### 🛍️ Product View & Cart  
-![Product View](images/product-view.png)  
-![Shopping Cart](images/shopping-cart.png)
+![Product View](images/productview.png)  
+![Shopping Cart](images/shoppingcart.png)
 
 ### 💳 Checkout & Order Summary  
 ![Checkout](images/checkout.png)  
-![Order Summary](images/order-summary.png)
+![Order Summary](images/ordersummary.png)
 
 ### 👤 Profile Management  
-![Profile Management](images/profile-management.png)
+![Profile Management](images/profilemanage.png)
 
 ### 🌟 Featured Section  
-![Featured](images/featured.png)
+![Featured](images/featuredproduct.png)
 
+---
+## 🚀 Deployment Notes
+
+This project uses **Razor Views** and follows a **monolithic ASP.NET Core MVC architecture** with server-side rendering.  
+Unlike frontend frameworks like React or Angular that support static deployment, this approach requires a full server environment.  
+
+Deployment involves configuring:
+- IIS or Kestrel hosting  
+- SQL Server setup and migrations  
+- ASP.NET Core Identity seeding and role management  
+- Proper environment-specific settings in `appsettings.json`  
+
+Due to this complexity, the application is not currently deployed live.  
+Instead, detailed screenshots are provided above to demonstrate the complete functionality.
 ---
 
 ## 🚧 Project Status & Roadmap
