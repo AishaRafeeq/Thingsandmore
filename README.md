@@ -60,28 +60,51 @@ Here’s a visual walkthrough of the application features from both Admin and Cu
 ### 🔐 Admin Dashboard  
 ![Admin Dashboard](images/admindashboard.png)
 
+
+
+### 🏠 Admin Home
+![Admin Home](images/adminview.png)
+
+
+
 ### 👥 Manage Users  
 ![Manage Users](images/manageuser.png)
 
+
+
 ### ➕ Add Product  
-![Add Product](images/Upload_product.png)
+![Add Product](images/Uploadproduct.png)
+
+
 
 ### 📦 Manage Orders  
 ![Manage Orders](images/manageorders.png)
 
+
+
 ### 🏠 Customer Home  
 ![Customer Home](images/customerhome.png)
+
+
 
 ### 🛍️ Product View & Cart  
 ![Product View](images/productview.png)  
 ![Shopping Cart](images/shoppingcart.png)
 
+
+
+
 ### 💳 Checkout & Order Summary  
 ![Checkout](images/checkout.png)  
 ![Order Summary](images/ordersummary.png)
 
+
+
 ### 👤 Profile Management  
 ![Profile Management](images/profilemanage.png)
+
+
+
 
 ### 🌟 Featured Section  
 ![Featured](images/featuredproduct.png)
