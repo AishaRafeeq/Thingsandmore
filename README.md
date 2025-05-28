@@ -10,6 +10,7 @@ This is a fully functional e-commerce web application developed using ASP.NET Co
 - **Technology Stack:** ASP.NET Core MVC, C#, SQL Server, Entity Framework Core, ASP.NET Core Identity  
 - **Purpose:** To create a scalable e-commerce platform with role-based access control (Admin and Customer) and a secure user authentication system.  
 - **Status:** Completed
+  
 
 ---
 
@@ -52,6 +53,18 @@ This is a fully functional e-commerce web application developed using ASP.NET Co
 - **Font Awesome** – Icons used throughout the application  
 
 ---
+---
+
+## 🚀 Live Demo
+
+You can explore the live version of the e-commerce application here:
+
+👉 [🔗 View Live Demo] (https://thingsandmore.runasp.net/) 
+
+> 📝 *Note: The live demo may have limited functionality or sample data only.*
+
+---
+
 
 ## 📸 Application Screenshots
 
@@ -110,20 +123,7 @@ Here’s a visual walkthrough of the application features from both Admin and Cu
 ![Featured](images/featuredproduct.png)
 
 ---
-## 🚀 Deployment Notes
 
-This project uses **Razor Views** and follows a **monolithic ASP.NET Core MVC architecture** with server-side rendering.  
-Unlike frontend frameworks like React or Angular that support static deployment, this approach requires a full server environment.  
-
-Deployment involves configuring:
-- IIS or Kestrel hosting  
-- SQL Server setup and migrations  
-- ASP.NET Core Identity seeding and role management  
-- Proper environment-specific settings in `appsettings.json`  
-
-Due to this complexity, the application is not currently deployed live.  
-Instead, detailed screenshots are provided above to demonstrate the complete functionality.
----
 
 ## 🚧 Project Status & Roadmap
 
@@ -131,8 +131,7 @@ The project is currently in its initial stages. Here are some future goals:
 
 - 💳 Implement payment gateway (e.g., Stripe, PayPal)  
 - 🎨 Improve UI and UX  
-- 📊 Add advanced reporting for Admin  
-- 🚀 Deploy to a production server (Azure, AWS, etc.)
+
 
 ---
 
